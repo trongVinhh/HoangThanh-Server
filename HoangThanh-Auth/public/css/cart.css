@@ -1,0 +1,36 @@
+.cart {
+    float: right;
+    margin-top: -23px;
+}
+
+.cart a {
+    display: inline-block;
+    position: relative;
+}
+
+.cart img {
+    vertical-align: middle;
+    scale: 1.5;
+}
+
+.cart .item-count {
+    display: inline-block;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #f00;
+    border-radius: 50%;
+}
+
+.cart .price {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 16px;
+}
