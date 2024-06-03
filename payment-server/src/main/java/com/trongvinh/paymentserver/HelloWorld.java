@@ -19,14 +19,25 @@ class HelloWorld {
                 res[id++] = nums2[i2++];
             }
         }
-
-
         return 0;
+    }
+
+    public static int removeElement(int[] nums, int val) {
+        int id = 0;
+        for (int i = 0; i < nums.length ; i++) {
+            if (nums[i] != val) {
+                nums[id] = nums[i];
+                id++;
+            }
+        }
+        System.out.println(nums.length);
+        return id;
     }
 
     public static void main(String[] args) {
         int[] arr1 = {1,2,3,5};
         int[] arr2 = {4,6};
-        System.out.println(findMedianSortedArrays(arr1, arr2));
+//        System.out.println(findMedianSortedArrays(arr1, arr2));
+        System.out.println(removeElement(arr1, 3));
     }
 }
