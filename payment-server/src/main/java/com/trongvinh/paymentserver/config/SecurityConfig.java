@@ -25,11 +25,17 @@ public class SecurityConfig {
                     };
                     cors.configurationSource(source);
                 })
+                // configure authorization for http request from client
+
+
                 .authorizeHttpRequests(authorize -> {
                     authorize
                             .requestMatchers(HttpMethod.POST, "/submitOrder").permitAll()
-                            .requestMatchers(HttpMethod.GET, "/vnpay-payment").permitAll();
+                            .requestMatchers(HttpMethod.GET, "/vnpay-payment").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/test").permitAll();
+
                 })
+
                 // configure session management for http request from client
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

@@ -1,6 +1,12 @@
 package com.trongvinh.paymentserver.config.vnpay;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.trongvinh.paymentserver.model.Payment;
 import jakarta.servlet.http.HttpServletRequest;
+import org.bson.Document;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -105,13 +111,48 @@ public class VNPayService {
         }
         String signValue = VNPayConfig.hashAllFields(fields);
         if (signValue.equals(vnp_SecureHash)) {
+            System.out.println("im here");
+            String orderInfo = request.getParameter("vnp_OrderInfo");
+            String paymentTime = request.getParameter("vnp_PayDate");
+            String transactionId = request.getParameter("vnp_TransactionNo");
+            String totalPrice = request.getParameter("vnp_Amount");
+            Payment payment = new Payment();
+            payment.setTransactionId(transactionId);
+            payment.setAmount(Double.parseDouble(totalPrice));
+            payment.setOrderInfo(orderInfo);
+            payment.setPaymentTime(paymentTime);
             if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
+
+                payment.setStatus("success");
+                this.savePayment(payment);
                 return 1;
             } else {
+                payment.setStatus("fail");
+                this.savePayment(payment);
                 return 0;
             }
         } else {
             return -1;
+        }
+
+
+    }
+
+    // save payment to db
+    public void savePayment(Payment payment) {
+        String uri = "mongodb+srv://trongvinh:2905@cluster0.fucqrsn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+            MongoDatabase database = mongoClient.getDatabase("ThangLongTourism");
+            MongoCollection<Document> collection = database.getCollection("payments");
+            // payment to be saved
+            Document doc = new Document("transactionId", payment.getTransactionId())
+                    .append("amount", payment.getAmount())
+                    .append("orderInfo", payment.getOrderInfo())
+                    .append("paymentTime", payment.getPaymentTime());
+            collection.insertOne(doc);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -1,0 +1,70 @@
+<style>
+      /* Thiết lập kiểu cho phần tìm kiếm */
+      .search {
+        margin: 10px 0;
+      }
+      
+      /* Thiết lập kiểu cho bảng đơn hàng */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+      }
+      
+      th {
+        background-color: #f2f2f2;
+      }
+      
+      /* Thiết lập kiểu cho các trạng thái đơn hàng */
+      .pending {
+        color: orange;
+      }
+      
+      .paid {
+        color: green;
+      }
+      
+      .shipped {
+        color: blue;
+      }
+      
+      .cancelled {
+        color: red;
+      }
+  </style>    
+    <header>
+      {{>header-admin}}
+    </header>
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã đơn hàng</th>
+            <th>Tên khách hàng</th>
+            <th>Trạng thái</th>
+            <th>Chi tiết</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each orders}}
+          <tr>
+            <td>{{ this._id }}</td>
+            <td>{{ this.customer_id.name }}</td>
+            {{#if this.purchased }}
+            <td class="paid">Đã thanh toán</td>
+            {{else}}
+            <td class="pending">Đang chờ thanh toán</td>
+            {{/if}}
+            <td><a href="/admin/viewOrder?id={{this._id}}">Xem</a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>
