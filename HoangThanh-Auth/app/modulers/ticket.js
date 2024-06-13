@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const ticketSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     username: {
         type: String,
         require: true
@@ -24,10 +29,18 @@ const ticketSchema = new mongoose.Schema({
     child: {
         type: Number,
         require: true
-    },
+    },  
     fee: {
         type: Number,
         require: true
+    }, 
+    isCollected: {
+        type: Boolean,
+        default: false
+    },
+    isExpired: {
+        type: Boolean,
+        default: false
     }
 })
 

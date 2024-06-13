@@ -1,0 +1,27 @@
+#form {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: -310px;
+    scale: 1.1;
+}
+
+#query {
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    width: 250px;
+}
+
+button {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 3px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}

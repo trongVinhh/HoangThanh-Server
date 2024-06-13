@@ -1,7 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const hbs = require('express-handlebars');
 var cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 var logger = require('morgan');
 const cors = require('cors');
 
@@ -9,11 +11,11 @@ var route = require("./routes/index")
 var data = require("./config/index")
 
 var app = express();
-const port = 3000;
+const port = 3001;
 
 // view engine setup
+app.use(express.static(__dirname + '/public'));
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -27,8 +29,10 @@ app.use(cors());
 //   next(createError(404));
 // });
 
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, '/views'));
+
 data.connect();
-route(app);
 app.listen(port, () => {
     console.log(`post ${port}`);
   });
@@ -42,5 +46,5 @@ app.listen(port, () => {
 //   res.status(err.status || 500);
 //   res.render('error');
 // });
-
+route(app);
 module.exports = app;
